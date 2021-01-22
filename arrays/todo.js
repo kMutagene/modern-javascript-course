@@ -28,6 +28,10 @@ todos.shift()
 
 console.log(todos)
 
-todos.forEach(todo =>
-    console.log(`You have to: ${todo}`)
-)
+todos.forEach((item, index) => {
+    console.log(`${index}. ${item}`)
+})
+
+for (let i = 0; i < todos.length; i++) {
+    console.log(`${i+1}. ${todos[i]}`)
+}
