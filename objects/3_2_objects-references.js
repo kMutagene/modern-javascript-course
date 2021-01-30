@@ -16,3 +16,12 @@ addExpense(myAccount, 2.50)
 
 console.log(otherAccount)
 console.log(myAccount)
+
+//object references are not equal!
+console.log({} === {})
+
+let a = {}
+
+let b = a
+
+console.log(b === a) // same reference -> true
