@@ -1,6 +1,3 @@
-// 1. convert to object array with text and completed properties
-// create function to remove todo by text
-
 type ToDo = {
     Text:       string,
     Completed:  boolean
@@ -17,7 +14,7 @@ const myToDos : ToDo [] = [{
     Completed: false
 },{
     Text: "use const more",
-    Completed: false
+    Completed: true
 },{
     Text: "Forget F# for learning JS fundamentals",
     Completed: false
@@ -32,8 +29,10 @@ const deleteToDoByText = function (text: string, toDos: ToDo [] ) {
     }
 }
 
-console.log(myToDos)
+const getThingsToDo = function (toDos:ToDo[]) {
+    return toDos.filter((todo,_) => {
+        return todo.Completed
+    })
+}
 
-deleteToDoByText("Forget F# for learning JS fundamentals",myToDos)
-
-console.log(myToDos)
+console.log(getThingsToDo(myToDos))
