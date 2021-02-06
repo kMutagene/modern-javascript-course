@@ -11,7 +11,7 @@ const myToDos : ToDo [] = [{
     Completed: false
 },{
     Text: "Remember that JS does not seem to have meaningfull whitespace",
-    Completed: false
+    Completed: true
 },{
     Text: "use const more",
     Completed: true
@@ -31,8 +31,21 @@ const deleteToDoByText = function (text: string, toDos: ToDo [] ) {
 
 const getThingsToDo = function (toDos:ToDo[]) {
     return toDos.filter((todo,_) => {
-        return todo.Completed
+        return !todo.Completed
     })
 }
 
-console.log(getThingsToDo(myToDos))
+const sortToDos = function (toDos:ToDo[]) {
+    toDos.sort(function (a, b) {
+        if (!a.Completed && b.Completed) {
+            return -1
+        } else if (a.Completed && !b.Completed) {
+            return 1
+        } else {
+            return 0
+        }
+    })
+}
+
+sortToDos(myToDos)
+console.log(myToDos)

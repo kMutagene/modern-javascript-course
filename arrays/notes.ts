@@ -3,7 +3,7 @@ type Note = {
     Body:string
 }
 
-const notes : Note []= [{
+const myNotes : Note [] = [{
     Title: "My next trip",
     Body: "I would like to go to spain"
 }, {
@@ -14,13 +14,23 @@ const notes : Note []= [{
     Body: "Get a new seat"
 }]
 
+const sortNotes = function (notes:Note[]) {
+    notes.sort(function (note1, note2) {
+        if (note1.Title.toLowerCase() < note2.Title.toLowerCase() ) {
+            return -1
+        } else if (note2.Title.toLowerCase() < note1.Title.toLowerCase()) {
+            return 1
+        } else {
+            return 0
+        }
+    })
+}
+
 const findNote = function (notes:Note[], title:string) {
     return notes.find(function(note, _) {
         return note.Title.toLowerCase() === title.toLowerCase()
     })
 }
-
-console.log(findNote(notes,"My next trip"))
 
 const findNotes = function(notes:Note[], query:string) {
     return notes.filter(function(note,index) {
@@ -36,5 +46,5 @@ const findNotes = function(notes:Note[], query:string) {
     })
 }
 
-console.log(findNotes(notes,"work"))
-
+sortNotes(myNotes)
+console.log(myNotes)
