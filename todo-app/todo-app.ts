@@ -39,3 +39,7 @@ myToDos.map((toDo) => {
     p.textContent = toDo.Text
     todosSection?.appendChild(p)
 })
+
+document.querySelector("button")?.addEventListener("click",(event) => {
+    console.log ("Adding to do ...")
+})
