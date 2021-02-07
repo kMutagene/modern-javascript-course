@@ -10,14 +10,27 @@
             <h1 class="title">Things to do</h1>
         </div>
     </section>
-    <section id="todos" class="section">
-        <div class="field has-addons">
-            <p class="control is-expanded">
-                <input id="new-todo-input" class="input" type="text" placeholder="what do you want to do?">
-            </p>
-            <div class="control">
-                <button id="add-todo-btn" class="button is-success">Add ToDo</button>
+    <section class="section">
+        <div class="content">
+            <h2 id="todo-amount-display" class=subtitle></h2>
+        </div>
+        <form>
+            <div class="field has-addons">
+                <p class="control is-expanded">
+                    <input id="new-todo-input" class="input" type="text" placeholder="what do you want to do?">
+                </p>
+                <div class="control">
+                    <button id="add-todo-btn" class="button is-success">Add ToDo</button>
+                </div>
             </div>
+            <div class="field">
+                <p class="control is-expanded">
+                    <input id="todo-filter-input" class="input" type="text" placeholder="filter todos ...">
+                </p>
+            </div>
+        </form>
+        <div class="content">
+            <ul id="todos-list"></ul>
         </div>
     </section>
 </body>

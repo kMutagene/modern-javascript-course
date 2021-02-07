@@ -1,6 +1,6 @@
 // DOM - Document Object Model
 
-import {Note} from "./domain"
+import {Note, Filters} from "./domain"
 
 const myNotes : Note [] = [{
     Title: "My next trip",
@@ -12,6 +12,29 @@ const myNotes : Note [] = [{
     Title: "office modifications",
     Body: "Get a new seat"
 }]
+
+const filters : Filters = {
+    SearchText: ""
+}
+
+const notesList = document.querySelector("#notes-list")
+
+const renderNotes = (notes:Note[], filters:Filters) => {
+    const filteredNotes = notes.filter((note) => {
+        return note.Title.toLowerCase().includes(filters.SearchText.toLowerCase())
+    })
+
+    if (notesList) notesList.innerHTML = ""
+
+    filteredNotes.map((note) =>{
+        const noteElement = document.createElement("li")
+        noteElement.className = "note"
+        noteElement.textContent = note.Title
+        notesList?.appendChild(noteElement)
+    })
+}
+
+renderNotes(myNotes, filters)
 
 const addNoteBtn = document.querySelector("#add-note-btn")
 
@@ -30,5 +53,6 @@ removeAllNotesBtn?.addEventListener("click", (event) => {
 const searchNoteText = document.querySelector("#search-note-text")
 
 searchNoteText?.addEventListener("input",(event) => {
-    console.log((<HTMLInputElement>event.currentTarget).value)
+    filters.SearchText = (<HTMLInputElement>event.currentTarget).value
+    renderNotes(myNotes, filters)
 })

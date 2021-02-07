@@ -1,4 +1,4 @@
-import {ToDo} from "./domain"
+import {ToDo, Filters} from "./domain"
 
 const myToDos : ToDo [] = [{
     Text: "Learn some JS fundamentals",
@@ -17,37 +17,54 @@ const myToDos : ToDo [] = [{
     Completed: false
 }]
 
-// todos left (p element)
+const filters : Filters= {
+    SearchText: ""
+}
 
-// add p for each todo above (from text property)
-
-const todosSection = document.getElementById("todos")
-
-const toDosLeft =
-    myToDos
-    .filter((toDo) => {
-        return !toDo.Completed
-    })
-
-const h = document.createElement("h2")
-h.className = "subtitle"
-h.textContent = `You have ${toDosLeft.length} things to do`
-todosSection?.appendChild(h)
-
-myToDos.map((toDo) => {
-    const p = document.createElement("p")
-    p.textContent = toDo.Text
-    todosSection?.appendChild(p)
-})
-
+const todosList = document.querySelector("#todos-list")
+const todoAmountDisplay = document.querySelector("#todo-amount-display")
 const addTodoBtn = document.querySelector("#add-todo-btn")
+const todoFilterInput = document.querySelector("#todo-filter-input")
+const newTodoInput = document.querySelector("#new-todo-input")
+
+const getAmountOfTodosLeft = (toDos: ToDo[]) => {
+    const filteredTodos =
+        toDos.filter((todo) => {
+            return !todo.Completed
+        })
+    return filteredTodos.length
+}
+
+const renderTodos = (toDos: ToDo[], filters: Filters) => {
+    
+    (<Element>todoAmountDisplay).textContent = `you have ${getAmountOfTodosLeft(myToDos)} things left to do.`
+    
+    const filteredTodos =
+        toDos.filter((todo) => {
+            return todo.Text.toLowerCase().includes(filters.SearchText.toLowerCase())
+        })
+    
+    if (todosList) todosList.innerHTML = ""
+
+    filteredTodos.map((todo) => {
+        const newToDo = document.createElement("li")
+        newToDo.className = "ToDoItem"
+        newToDo.textContent = todo.Text
+        todosList?.appendChild(newToDo)
+    })
+}
 
 addTodoBtn?.addEventListener("click",(event) => {
     console.log ("Adding to do ...")
 })
 
-const newTodoInput = document.querySelector("#new-todo-input")
-
 newTodoInput?.addEventListener("input",(event) => {
     console.log((<HTMLInputElement>event.target).value)
 })
+
+todoFilterInput?.addEventListener("input", (e) => {
+    filters.SearchText = (<HTMLInputElement>e.target).value
+    renderTodos(myToDos, filters)
+})
+
+renderTodos(myToDos,filters)
