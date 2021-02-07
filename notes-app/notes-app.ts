@@ -27,4 +27,8 @@ removeAllNotesBtn?.addEventListener("click", (event) => {
     })
 })
 
+const searchNoteText = document.querySelector("#search-note-text")
 
+searchNoteText?.addEventListener("input",(event) => {
+    console.log((<HTMLInputElement>event.currentTarget).value)
+})

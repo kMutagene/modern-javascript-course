@@ -40,6 +40,14 @@ myToDos.map((toDo) => {
     todosSection?.appendChild(p)
 })
 
-document.querySelector("#add-todo-btn")?.addEventListener("click",(event) => {
+const addTodoBtn = document.querySelector("#add-todo-btn")
+
+addTodoBtn?.addEventListener("click",(event) => {
     console.log ("Adding to do ...")
+})
+
+const newTodoInput = document.querySelector("#new-todo-input")
+
+newTodoInput?.addEventListener("input",(event) => {
+    console.log((<HTMLInputElement>event.target).value)
 })
