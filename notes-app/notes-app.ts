@@ -13,7 +13,18 @@ const myNotes : Note [] = [{
     Body: "Get a new seat"
 }]
 
-document.querySelector("button")?.addEventListener("click", (event) => {
-    console.log(event)
-    console.log("clicked")
+const addNoteBtn = document.querySelector("#add-note-btn")
+
+addNoteBtn?.addEventListener("click",(event) => {
+    console.log("adding note ...")
 })
+
+const removeAllNotesBtn = document.querySelector("#remove-all-notes-btn")
+
+removeAllNotesBtn?.addEventListener("click", (event) => {
+    document.querySelectorAll(".note").forEach((note) => {
+        note.remove()
+    })
+})
+
+
