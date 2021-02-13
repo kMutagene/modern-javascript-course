@@ -54,10 +54,8 @@ searchNoteText?.addEventListener("input",(event) => {
     renderNotes(myNotes, notefilters)
 })
 
-const form = document.querySelector("#name-form")
+const testCheckbox : HTMLInputElement | null = document.querySelector("#test-checkbox")
 
-form?.addEventListener("submit",(event) => {
-    event.preventDefault()
-    let form = (<HTMLFormElement>event.currentTarget)
-    console.log(form.firstName.value)
+testCheckbox?.addEventListener("change", (e) => {
+    console.log((<HTMLInputElement>e.currentTarget).checked)
 })

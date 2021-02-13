@@ -11,7 +11,8 @@ const createToDo = (text:string) : ToDo => {
 }
 
 type ToDoFilters = {
-    SearchText: string
+    SearchText: string,
+    ShowCompleted: boolean
 }
 
 const myToDos : ToDo [] = [{
@@ -32,7 +33,8 @@ const myToDos : ToDo [] = [{
 }]
 
 const toDoFilters : ToDoFilters= {
-    SearchText: ""
+    SearchText: "",
+    ShowCompleted: true
 }
 
 const todosList = document.querySelector("#todos-list")
@@ -40,6 +42,7 @@ const todoAmountDisplay = document.querySelector("#todo-amount-display")
 const todoFilterInput = document.querySelector("#todo-filter-input")
 const todoForm = document.querySelector("#todo-form")
 const newToDoInput = document.querySelector("#new-todo-input")
+const completedFilterCheckbox = document.querySelector("#completed-filter-checkbox")
 
 const getAmountOfTodosLeft = (toDos: ToDo[]) => {
     const filteredTodos =
@@ -54,9 +57,17 @@ const renderTodos = (toDos: ToDo[], toDoFilters: ToDoFilters) => {
     (<Element>todoAmountDisplay).textContent = `you have ${getAmountOfTodosLeft(myToDos)} things left to do.`
     
     const filteredTodos =
-        toDos.filter((todo) => {
-            return todo.Text.toLowerCase().includes(toDoFilters.SearchText.toLowerCase())
-        })
+        toDos
+            .filter((todo) => {
+                return todo.Text.toLowerCase().includes(toDoFilters.SearchText.toLowerCase())
+            })
+            .filter((toDo) => {
+                if (toDo.Completed) {
+                    return (toDo.Completed && toDoFilters.ShowCompleted) 
+                } else {
+                    return true
+                }
+            })
     
     if (todosList) todosList.innerHTML = ""
 
@@ -83,6 +94,12 @@ todoForm?.addEventListener("submit", (e) => {
     myToDos.push(newToDo)
     renderTodos(myToDos,toDoFilters)
     input.value = ""
+})
+
+completedFilterCheckbox?.addEventListener("change", (e) =>{
+    let checkbox = (<HTMLInputElement>(e.currentTarget))
+    toDoFilters.ShowCompleted = checkbox.checked
+    renderTodos(myToDos,toDoFilters)
 })
 
 //first render step with preset todos and no filters
