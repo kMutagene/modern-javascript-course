@@ -1,6 +1,11 @@
-// DOM - Document Object Model
+type Note = {
+    Title: string,
+    Body:string
+}
 
-import {Note, Filters} from "./domain"
+type NoteFilters = {
+    SearchText: string
+}
 
 const myNotes : Note [] = [{
     Title: "My next trip",
@@ -13,15 +18,15 @@ const myNotes : Note [] = [{
     Body: "Get a new seat"
 }]
 
-const filters : Filters = {
+const notefilters : NoteFilters = {
     SearchText: ""
 }
 
 const notesList = document.querySelector("#notes-list")
 
-const renderNotes = (notes:Note[], filters:Filters) => {
+const renderNotes = (notes:Note[], notefilters:NoteFilters) => {
     const filteredNotes = notes.filter((note) => {
-        return note.Title.toLowerCase().includes(filters.SearchText.toLowerCase())
+        return note.Title.toLowerCase().includes(notefilters.SearchText.toLowerCase())
     })
 
     if (notesList) notesList.innerHTML = ""
@@ -34,7 +39,7 @@ const renderNotes = (notes:Note[], filters:Filters) => {
     })
 }
 
-renderNotes(myNotes, filters)
+renderNotes(myNotes, notefilters)
 
 const addNoteBtn = document.querySelector("#add-note-btn")
 
@@ -42,17 +47,17 @@ addNoteBtn?.addEventListener("click",(event) => {
     console.log("adding note ...")
 })
 
-const removeAllNotesBtn = document.querySelector("#remove-all-notes-btn")
-
-removeAllNotesBtn?.addEventListener("click", (event) => {
-    document.querySelectorAll(".note").forEach((note) => {
-        note.remove()
-    })
-})
-
 const searchNoteText = document.querySelector("#search-note-text")
 
 searchNoteText?.addEventListener("input",(event) => {
-    filters.SearchText = (<HTMLInputElement>event.currentTarget).value
-    renderNotes(myNotes, filters)
+    notefilters.SearchText = (<HTMLInputElement>event.currentTarget).value
+    renderNotes(myNotes, notefilters)
+})
+
+const form = document.querySelector("#name-form")
+
+form?.addEventListener("submit",(event) => {
+    event.preventDefault()
+    let form = (<HTMLFormElement>event.currentTarget)
+    console.log(form.firstName.value)
 })

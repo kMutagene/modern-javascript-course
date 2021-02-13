@@ -1,4 +1,18 @@
-import {ToDo, Filters} from "./domain"
+type ToDo = {
+    Text:       string,
+    Completed:  boolean
+}
+
+const createToDo = (text:string) : ToDo => {
+    return {
+        Text: text,
+        Completed: false
+    }
+}
+
+type ToDoFilters = {
+    SearchText: string
+}
 
 const myToDos : ToDo [] = [{
     Text: "Learn some JS fundamentals",
@@ -17,15 +31,15 @@ const myToDos : ToDo [] = [{
     Completed: false
 }]
 
-const filters : Filters= {
+const toDoFilters : ToDoFilters= {
     SearchText: ""
 }
 
 const todosList = document.querySelector("#todos-list")
 const todoAmountDisplay = document.querySelector("#todo-amount-display")
-const addTodoBtn = document.querySelector("#add-todo-btn")
 const todoFilterInput = document.querySelector("#todo-filter-input")
-const newTodoInput = document.querySelector("#new-todo-input")
+const todoForm = document.querySelector("#todo-form")
+const newToDoInput = document.querySelector("#new-todo-input")
 
 const getAmountOfTodosLeft = (toDos: ToDo[]) => {
     const filteredTodos =
@@ -35,13 +49,13 @@ const getAmountOfTodosLeft = (toDos: ToDo[]) => {
     return filteredTodos.length
 }
 
-const renderTodos = (toDos: ToDo[], filters: Filters) => {
+const renderTodos = (toDos: ToDo[], toDoFilters: ToDoFilters) => {
     
     (<Element>todoAmountDisplay).textContent = `you have ${getAmountOfTodosLeft(myToDos)} things left to do.`
     
     const filteredTodos =
         toDos.filter((todo) => {
-            return todo.Text.toLowerCase().includes(filters.SearchText.toLowerCase())
+            return todo.Text.toLowerCase().includes(toDoFilters.SearchText.toLowerCase())
         })
     
     if (todosList) todosList.innerHTML = ""
@@ -54,17 +68,23 @@ const renderTodos = (toDos: ToDo[], filters: Filters) => {
     })
 }
 
-addTodoBtn?.addEventListener("click",(event) => {
-    console.log ("Adding to do ...")
-})
-
-newTodoInput?.addEventListener("input",(event) => {
-    console.log((<HTMLInputElement>event.target).value)
-})
-
+// ToDo filter based on todo text
 todoFilterInput?.addEventListener("input", (e) => {
-    filters.SearchText = (<HTMLInputElement>e.target).value
-    renderTodos(myToDos, filters)
+    toDoFilters.SearchText = (<HTMLInputElement>e.target).value
+    renderTodos(myToDos, toDoFilters)
 })
 
-renderTodos(myToDos,filters)
+// Add a new todo
+todoForm?.addEventListener("submit", (e) => {
+    e.preventDefault()
+    let form = (<HTMLFormElement>e.currentTarget)
+    let input = (<HTMLInputElement>newToDoInput)
+    let newToDo = createToDo(form.todoText.value)
+    myToDos.push(newToDo)
+    renderTodos(myToDos,toDoFilters)
+    input.value = ""
+})
+
+//first render step with preset todos and no filters
+renderTodos(myToDos,toDoFilters)
+
