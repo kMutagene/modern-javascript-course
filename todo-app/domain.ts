@@ -54,17 +54,17 @@ const createToDoDOM = (toDo:ToDo) => {
     return row
 } 
 
-const updateSummaryDOM = (toDos:ToDo[]) => {
+const generateSummaryDOM = (toDos:ToDo[]) => {
     let amnt = getAmountOfTodosLeft(toDos);
-    (<Element>todoAmountDisplay).textContent = `you have ${amnt} things left to do.`
+    let header = document.createElement("h2")
+    header.textContent = `you have ${amnt} things left to do.`
+    return header
 }
 
 
 // render application ToDos based on current filters
 const renderTodos = (toDos: ToDo[], toDoFilters: ToDoFilters) => {
-    
-    updateSummaryDOM(toDos)
-    
+
     const filteredTodos =
         toDos
             .filter((todo) => {
@@ -83,6 +83,7 @@ const renderTodos = (toDos: ToDo[], toDoFilters: ToDoFilters) => {
     // clear current dispaly
     if (toDosTable) toDosTable.innerHTML = ""
         
+    tableInfo?.appendChild(generateSummaryDOM(toDos))
 
     filteredTodos.map((toDo) => {
         let newToDo = createToDoDOM(toDo)
@@ -93,7 +94,6 @@ const renderTodos = (toDos: ToDo[], toDoFilters: ToDoFilters) => {
 
 const initApp = (toDos: ToDo[], filters: ToDoFilters) => {
     getToDosFromLocalStorage()
-    updateSummaryDOM(toDos)
     renderTodos(toDos,filters)
 }
 

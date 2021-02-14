@@ -6,7 +6,7 @@ const toDoFilters : ToDoFilters= {
 }
 
 const toDosTable = document.querySelector("#todos-table")
-const todoAmountDisplay = document.querySelector("#todo-amount-display")
+const tableInfo = document.querySelector("#table-info")
 const todoFilterInput = document.querySelector("#todo-filter-input")
 const todoForm = document.querySelector("#todo-form")
 const newToDoInput = document.querySelector("#new-todo-input")
