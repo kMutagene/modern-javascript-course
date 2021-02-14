@@ -1,11 +1,19 @@
 type Note = {
     Title: string,
-    Body:string
+    Body: string
 }
 
 type NoteFilters = {
     SearchText: string
 }
+
+const userJSON = (<string>localStorage.getItem("user"))
+
+const user = JSON.parse(userJSON)
+
+console.log(user)
+
+type Sorting = | "edited" | "created" | "alphabetically"
 
 const myNotes : Note [] = [{
     Title: "My next trip",
@@ -54,8 +62,9 @@ searchNoteText?.addEventListener("input",(event) => {
     renderNotes(myNotes, notefilters)
 })
 
-const testCheckbox : HTMLInputElement | null = document.querySelector("#test-checkbox")
+const sortNotesSelect = document.querySelector("#sort-notes-select")
 
-testCheckbox?.addEventListener("change", (e) => {
-    console.log((<HTMLInputElement>e.currentTarget).checked)
+sortNotesSelect?.addEventListener("change", (e) => {
+    let select = (<HTMLSelectElement>e.currentTarget)
+    console.log(select.value)
 })
