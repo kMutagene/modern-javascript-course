@@ -1,28 +1,4 @@
-type Note = {
-    Title: string,
-    Body: string
-}
-
-const createNote = (title:string,body:string) : Note => {
-    return {
-        Title: title,
-        Body: body
-    }
-}
-
-type NoteFilters = {
-    SearchText: string
-}
-
-type Sorting = | "edited" | "created" | "alphabetically"
-
-let myNotes : Note [] = []
-
-const notesJSON = localStorage.getItem("myNotes")
-
-if (notesJSON) {
-    myNotes = JSON.parse(notesJSON)
-}
+const myNotes : Note [] = getNotesFromLocalStorage()
 
 const notefilters : NoteFilters = {
     SearchText: ""
@@ -30,29 +6,12 @@ const notefilters : NoteFilters = {
 
 const notesList = document.querySelector("#notes-list")
 
-const renderNotes = (notes:Note[], notefilters:NoteFilters) => {
-    const filteredNotes = notes.filter((note) => {
-        return note.Title.toLowerCase().includes(notefilters.SearchText.toLowerCase())
-    })
-
-    if (notesList) notesList.innerHTML = ""
-
-    filteredNotes.map((note) =>{
-        if (note.Title.length === 0) {note.Title = "unnamed note"}
-        const noteElement = document.createElement("li")
-        noteElement.className = "note"
-        noteElement.textContent = note.Title
-        notesList?.appendChild(noteElement)
-    })
-}
-
-
 const addNoteBtn = document.querySelector("#add-note-btn")
 
 addNoteBtn?.addEventListener("click",(event) => {
     let newNote = createNote("","")
     myNotes.push(newNote)
-    localStorage.setItem("myNotes", (JSON.stringify(myNotes)))
+    saveNotesInLocalStorage(myNotes)
     renderNotes(myNotes, notefilters)
 })
 
