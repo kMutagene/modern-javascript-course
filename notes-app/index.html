@@ -13,11 +13,24 @@
     </section>
     <section class="section">
         <button id="add-note-btn" class="button is-success">Create note</button>
-        <label class="checkbox">
-            <input id="test-checkbox" type="checkbox">
-            soos
-        </label>
-        <input id="search-note-text" type="text" class="input" placeholder="filter notes">
+        <div class='field'>
+           <label class='label'>Filter notes</label>
+           <div class='control'>
+               <input id="search-note-text" type="text" class="input" placeholder="filter notes">
+           </div>
+        </div>
+        <div class='field'>
+           <label class='label'>Sort By</label>
+           <div class='control'>
+               <div class='select'>
+                   <select id="sort-notes-select">
+                       <option value="edited">last edited</option>
+                       <option value="created">recently created</option>
+                       <option value="alphabetically">alphabetical order</option>
+                   </select>
+               </div>
+           </div>
+        </div>
         <div class="content">
             <ul id="notes-list"></ul>
         </div>
