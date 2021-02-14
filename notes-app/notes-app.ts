@@ -3,28 +3,26 @@ type Note = {
     Body: string
 }
 
+const createNote = (title:string,body:string) : Note => {
+    return {
+        Title: title,
+        Body: body
+    }
+}
+
 type NoteFilters = {
     SearchText: string
 }
 
-const userJSON = (<string>localStorage.getItem("user"))
-
-const user = JSON.parse(userJSON)
-
-console.log(user)
-
 type Sorting = | "edited" | "created" | "alphabetically"
 
-const myNotes : Note [] = [{
-    Title: "My next trip",
-    Body: "I would like to go to spain"
-}, {
-    Title: "habits to work on",
-    Body: "excercise, eating a bit better"
-}, {
-    Title: "office modifications",
-    Body: "Get a new seat"
-}]
+let myNotes : Note [] = []
+
+const notesJSON = localStorage.getItem("myNotes")
+
+if (notesJSON) {
+    myNotes = JSON.parse(notesJSON)
+}
 
 const notefilters : NoteFilters = {
     SearchText: ""
@@ -40,6 +38,7 @@ const renderNotes = (notes:Note[], notefilters:NoteFilters) => {
     if (notesList) notesList.innerHTML = ""
 
     filteredNotes.map((note) =>{
+        if (note.Title.length === 0) {note.Title = "unnamed note"}
         const noteElement = document.createElement("li")
         noteElement.className = "note"
         noteElement.textContent = note.Title
@@ -47,12 +46,14 @@ const renderNotes = (notes:Note[], notefilters:NoteFilters) => {
     })
 }
 
-renderNotes(myNotes, notefilters)
 
 const addNoteBtn = document.querySelector("#add-note-btn")
 
 addNoteBtn?.addEventListener("click",(event) => {
-    console.log("adding note ...")
+    let newNote = createNote("","")
+    myNotes.push(newNote)
+    localStorage.setItem("myNotes", (JSON.stringify(myNotes)))
+    renderNotes(myNotes, notefilters)
 })
 
 const searchNoteText = document.querySelector("#search-note-text")
@@ -68,3 +69,5 @@ sortNotesSelect?.addEventListener("change", (e) => {
     let select = (<HTMLSelectElement>e.currentTarget)
     console.log(select.value)
 })
+
+renderNotes(myNotes, notefilters)

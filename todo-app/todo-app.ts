@@ -15,22 +15,19 @@ type ToDoFilters = {
     ShowCompleted: boolean
 }
 
-const myToDos : ToDo [] = [{
-    Text: "Learn some JS fundamentals",
-    Completed: false
-},{
-    Text: "ALWAYS use the commas for JS arrays",
-    Completed: false
-},{
-    Text: "Remember that JS does not seem to have meaningfull whitespace",
-    Completed: true
-},{
-    Text: "use const more",
-    Completed: true
-},{
-    Text: "Forget F# for learning JS fundamentals",
-    Completed: false
-}]
+let myToDos : ToDo [] = []
+
+let getToDosFromLocalStorage = () => {
+    let toDosJSON = localStorage.getItem("myToDos")
+    if (toDosJSON) {
+        myToDos = JSON.parse(toDosJSON)
+    }
+}
+
+let setToDosInLocalStorage = () => {
+    let toDosJSON = JSON.stringify(myToDos)
+    localStorage.setItem("myToDos", toDosJSON)
+}
 
 const toDoFilters : ToDoFilters= {
     SearchText: "",
@@ -92,6 +89,7 @@ todoForm?.addEventListener("submit", (e) => {
     let input = (<HTMLInputElement>newToDoInput)
     let newToDo = createToDo(form.todoText.value)
     myToDos.push(newToDo)
+    setToDosInLocalStorage()
     renderTodos(myToDos,toDoFilters)
     input.value = ""
 })
@@ -102,6 +100,9 @@ completedFilterCheckbox?.addEventListener("change", (e) =>{
     renderTodos(myToDos,toDoFilters)
 })
 
-//first render step with preset todos and no filters
-renderTodos(myToDos,toDoFilters)
+const initApp = () => {
+    getToDosFromLocalStorage()
+    renderTodos(myToDos,toDoFilters)
+}
 
+initApp()
