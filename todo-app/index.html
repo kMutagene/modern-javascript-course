@@ -11,35 +11,40 @@
         </div>
     </section>
     <section class="section">
-        <div class="content">
-            <h2 id="todo-amount-display" class=subtitle></h2>
-        </div>
-        <div class="field">
-            <p class="control is-expanded">
-                <input id="todo-filter-input" class="input" type="text" placeholder="filter todos ...">
-            </p>
-        </div>
-        <div class='field'>
-           <div class='control'>
-               <label class="checkbox">
-                   <input id="completed-filter-checkbox" type="checkbox" checked="true">
-                   Show completed ToDos
-               </label>
-           </div>
-        </div>
-        <div class="content">
-            <ul id="todos-list"></ul>
-        </div>
-        <form id="todo-form">
-            <div class="field has-addons">
-                <p class="control is-expanded">
-                    <input id="new-todo-input" class="input" type="text" name="todoText" placeholder="what do you want to do?">
-                </p>
-                <div class="control">
-                    <button id="add-todo-btn" class="button is-success">Add ToDo</button>
+        <div class='columns'>
+            <div class='column'>
+                <div class="content">
+                    <h2 id="todo-amount-display" class=subtitle></h2>
                 </div>
+                <form id="todo-form">
+                    <div class="field has-addons">
+                        <p class="control is-expanded">
+                            <input id="new-todo-input" class="input" type="text" name="todoText" placeholder="what do you want to do?">
+                        </p>
+                        <div class="control">
+                            <button id="add-todo-btn" class="button is-success">Add ToDo</button>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <p class="control is-expanded">
+                            <input id="todo-filter-input" class="input" type="text" placeholder="filter todos ...">
+                        </p>
+                    </div>
+                    <div class='field'>
+                        <div class='control'>
+                            <label class="checkbox">
+                                <input id="completed-filter-checkbox" type="checkbox" checked="true">
+                                Show completed ToDos
+                            </label>
+                        </div>
+                    </div>
+                </form>
             </div>
-        </form>
+            <div class='column'>
+                <table id="todos-table" class="table is-fullwidth is-hoverable is-striped">
+                </table>
+            </div>
+        </div>
     </section>
 </body>
 <footer>
