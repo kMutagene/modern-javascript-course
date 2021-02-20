@@ -68,9 +68,11 @@ const renderTodos = (toDos: ToDo[], toDoFilters: ToDoFilters) => {
     const filteredTodos =
         toDos
             .filter((todo) => {
+                debugger
                 return todo.Text.toLowerCase().includes(toDoFilters.SearchText.toLowerCase())
             })
             .filter((toDo) => {
+                debugger
                 if (toDo.Completed) {
                     return (toDo.Completed && toDoFilters.ShowCompleted) 
                 } else {
@@ -80,8 +82,9 @@ const renderTodos = (toDos: ToDo[], toDoFilters: ToDoFilters) => {
     
     console.log(filteredTodos)
 
-    // clear current dispaly
+    // clear current display data
     if (toDosTable) toDosTable.innerHTML = ""
+    if (tableInfo) tableInfo.innerHTML = ""
         
     tableInfo?.appendChild(generateSummaryDOM(toDos))
 
