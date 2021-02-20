@@ -39,6 +39,14 @@ const generateNoteDOM = (note: Note) => {
     
     let cardTitle = document.createElement("p")
     cardTitle.className = "card-header-title note-title"
+    
+    let cardFooter = document.createElement("footer")
+    cardFooter.className = "card-footer"
+
+    let deleteBtn = document.createElement("button")
+    deleteBtn.className = "button is-inverted is-danger card-footer-item"
+    deleteBtn.textContent = "Delete note"
+
 
     if (note.Title.length === 0) {
         cardTitle.textContent = "Unnamed Note"
@@ -61,8 +69,10 @@ const generateNoteDOM = (note: Note) => {
 
     cardContent.appendChild(content)
     cardHeader.appendChild(cardTitle)
+    cardFooter.appendChild(deleteBtn)
     card.appendChild(cardHeader)
     card.appendChild(cardContent)
+    card.append(cardFooter)
     block.appendChild(card)
 
     return block

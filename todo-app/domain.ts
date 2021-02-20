@@ -38,18 +38,27 @@ const getAmountOfTodosLeft = (toDos: ToDo[]) => {
 const createToDoDOM = (toDo:ToDo) => {
     let row = document.createElement("tr")
 
-    let text = document.createElement("td")
-    text.textContent = toDo.Text
+    let textTd = document.createElement("td")
+    textTd.textContent = toDo.Text
 
-    let completed = document.createElement("td")
+    let completedTd = document.createElement("td")
 
     let toDoCheckBox = document.createElement("input")
     toDoCheckBox.type = "checkbox"
     toDoCheckBox.checked = toDo.Completed
 
-    completed.appendChild(toDoCheckBox)
-    row.appendChild(completed)
-    row.appendChild(text)
+    let deleteTd = document.createElement("td")
+
+    let deleteBtn = document.createElement("button")
+    deleteBtn.textContent = "Delete"
+    deleteBtn.className = "button is-danger is-inverted"
+
+    
+    completedTd.appendChild(toDoCheckBox)
+    row.appendChild(completedTd)
+    row.appendChild(textTd)
+    deleteTd.appendChild(deleteBtn)
+    row.appendChild(deleteTd)
 
     return row
 } 
@@ -64,7 +73,7 @@ const generateSummaryDOM = (toDos:ToDo[]) => {
 
 // render application ToDos based on current filters
 const renderTodos = (toDos: ToDo[], toDoFilters: ToDoFilters) => {
-
+    debugger
     const filteredTodos =
         toDos
             .filter((todo) => {
