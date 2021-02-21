@@ -114,3 +114,16 @@ type ToDoFilters = {
     SearchText: string,
     ShowCompleted: boolean
 }
+
+export {
+    ToDo,
+    ToDoFilters,
+    createToDo,
+    createToDoDOM,
+    generateSummaryDOM,
+    getAmountOfTodosLeft,
+    getToDosFromLocalStorage,
+    initApp,
+    renderTodos,
+    saveToDosInLocalStorage
+}

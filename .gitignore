@@ -5,3 +5,4 @@ notes-app/notes-app.js
 todo-app/todo-app.js
 notes-app/domain.js
 todo-app/domain.js
+node_modules
