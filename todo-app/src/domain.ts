@@ -1,3 +1,5 @@
+import {tableInfo, toDosTable} from "./components"
+
 type ToDo = {
     Text:       string,
     Completed:  boolean
