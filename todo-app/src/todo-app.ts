@@ -20,7 +20,7 @@ Components.todoForm?.addEventListener("submit", (e) => {
     e.preventDefault()
     let form = (<HTMLFormElement>e.currentTarget)
     let input = (<HTMLInputElement>Components.newToDoInput)
-    let newToDo = createToDo(form.todoText.value)
+    let newToDo = Domain.createToDo(form.todoText.value)
     myToDos.push(newToDo)
     Domain.saveToDosInLocalStorage(myToDos)
     Domain.renderTodos(myToDos,toDoFilters)
