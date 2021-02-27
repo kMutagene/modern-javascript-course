@@ -1,8 +1,9 @@
+import * as Components from "./components"
+
 type Note = {
     Title: string,
     Body: string
 }
-
 //create a note
 const createNote = (title:string,body:string) : Note => {
     return {
@@ -10,7 +11,6 @@ const createNote = (title:string,body:string) : Note => {
         Body: body
     }
 }
-
 // get saved notes from local storage or empty note array
 const getNotesFromLocalStorage = () : Note [] => {
     const notesJSON = localStorage.getItem("myNotes")
@@ -20,11 +20,9 @@ const getNotesFromLocalStorage = () : Note [] => {
         return []
     }
 }
-
 const saveNotesInLocalStorage = (notes:Note[]) => {
     localStorage.setItem("myNotes", (JSON.stringify(notes)))
 }
-
 // generate the DOM structure for a note
 const generateNoteDOM = (note: Note) => {
 
@@ -77,23 +75,30 @@ const generateNoteDOM = (note: Note) => {
 
     return block
 } 
-
 // render application notes
 const renderNotes = (notes:Note[], notefilters:NoteFilters) => {
     const filteredNotes = notes.filter((note) => {
         return note.Title.toLowerCase().includes(notefilters.SearchText.toLowerCase())
     })
 
-    if (notesList) notesList.innerHTML = ""
+    if (Components.notesList) Components.notesList.innerHTML = ""
 
     filteredNotes.map((note) =>{
         let noteCard = generateNoteDOM(note)
-        notesList?.appendChild(noteCard)
+        Components.notesList?.appendChild(noteCard)
     })
 }
-
 type NoteFilters = {
     SearchText: string
 }
-
 type Sorting = | "edited" | "created" | "alphabetically"
+
+export {
+    Note,
+    NoteFilters,
+    Sorting,
+    createNote,
+    getNotesFromLocalStorage,
+    saveNotesInLocalStorage,
+    renderNotes
+}
