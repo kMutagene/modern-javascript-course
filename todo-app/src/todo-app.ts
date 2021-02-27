@@ -1,8 +1,11 @@
 import * as Domain from "./domain"
 import * as Components from "./components"
+import {v4} from "uuid"
 import type {ToDo, ToDoFilters} from "./domain"
 
 const myToDos : ToDo [] = Domain.getToDosFromLocalStorage()
+
+console.log(v4())
 
 const toDoFilters : ToDoFilters= {
     SearchText: "",
@@ -12,7 +15,7 @@ const toDoFilters : ToDoFilters= {
 // ToDo filter based on todo text
 Components.todoFilterInput?.addEventListener("input", (e) => {
     toDoFilters.SearchText = (<HTMLInputElement>e.target).value
-    renderTodos(myToDos, toDoFilters)
+    Domain.renderTodos(myToDos, toDoFilters)
 })
 
 // Add a new todo
