@@ -1,12 +1,14 @@
 import {tableInfo, toDosTable} from "./components"
 
 type ToDo = {
+    Id:         string,
     Text:       string,
     Completed:  boolean
 }
 
-const createToDo = (text:string) : ToDo => {
+const createToDo = (id:string,text:string) : ToDo => {
     return {
+        Id: id,
         Text: text,
         Completed: false
     }

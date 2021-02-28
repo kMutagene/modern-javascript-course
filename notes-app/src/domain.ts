@@ -1,12 +1,14 @@
 import * as Components from "./components"
 
 type Note = {
+    Id: string,
     Title: string,
     Body: string
 }
 //create a note
-const createNote = (title:string,body:string) : Note => {
+const createNote = (id:string,title:string,body:string) : Note => {
     return {
+        Id: id,
         Title: title,
         Body: body
     }

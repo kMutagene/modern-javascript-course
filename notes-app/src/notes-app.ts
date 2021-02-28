@@ -1,6 +1,8 @@
 import * as Domain from "./domain"
 import type {Note, NoteFilters, Sorting} from "./domain"
 
+import {v4} from "uuid"
+
 import * as Components from "./components"
 
 const myNotes : Note [] = Domain.getNotesFromLocalStorage()
@@ -10,7 +12,7 @@ const notefilters : NoteFilters = {
 }
 
 Components.addNoteBtn?.addEventListener("click",(event) => {
-    let newNote = Domain.createNote("","")
+    let newNote = Domain.createNote(v4(),"","")
     myNotes.push(newNote)
     Domain.saveNotesInLocalStorage(myNotes)
     Domain.renderNotes(myNotes, notefilters)
