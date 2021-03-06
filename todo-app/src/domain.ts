@@ -15,7 +15,7 @@ const createToDo = (id:string,text:string) : ToDo => {
 }
 
 // return locally saved ToDo array if present, else return an empty array
-let getToDosFromLocalStorage = () : ToDo [] => {
+const getToDosFromLocalStorage = () : ToDo [] => {
     let toDosJSON = localStorage.getItem("myToDos")
     if (toDosJSON) {
         return JSON.parse(toDosJSON)
@@ -25,16 +25,22 @@ let getToDosFromLocalStorage = () : ToDo [] => {
 }
 
 // Save ToDo array in local storage
-let saveToDosInLocalStorage = (toDos: ToDo[]) => {
+const saveToDosInLocalStorage = (toDos: ToDo[]) => {
     let toDosJSON = JSON.stringify(toDos)
     localStorage.setItem("myToDos", toDosJSON)
 }
 
-let deleteToDo = (toDo: ToDo, toDos: ToDo []) => {
+const deleteToDo = (toDo: ToDo, toDos: ToDo []) => {
     let deleteIndex = toDos.findIndex((t) => {return t.Id = toDo.Id})
     if (deleteIndex > -1) {
         toDos.splice(deleteIndex,1)
     }
+}
+
+const changeTodoCompletedState = (toDo: ToDo, completedState:boolean, allToDos:ToDo[]) => {
+    toDo.Completed = completedState
+    let toDoIndex = allToDos.findIndex((t)=>{t.Id = toDo.Id})
+    if (toDoIndex > -1) {allToDos[toDoIndex] = toDo}
 }
 
 // Returns the amount of uncompleted todos in the given ToDo array
@@ -57,6 +63,13 @@ const createToDoDOM = (toDo:ToDo, allToDos: ToDo [], filters: ToDoFilters) => {
     let toDoCheckBox = document.createElement("input")
     toDoCheckBox.type = "checkbox"
     toDoCheckBox.checked = toDo.Completed
+    toDoCheckBox.addEventListener("change", (e) => {
+        let checkbox = (<HTMLInputElement>(e.currentTarget))
+        let checkedState = checkbox.checked
+        changeTodoCompletedState(toDo,checkedState,allToDos)
+        saveToDosInLocalStorage(allToDos)
+        renderTodos(allToDos, filters)
+    })
 
     let deleteTd = document.createElement("td")
 
