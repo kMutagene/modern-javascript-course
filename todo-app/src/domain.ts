@@ -30,6 +30,13 @@ let saveToDosInLocalStorage = (toDos: ToDo[]) => {
     localStorage.setItem("myToDos", toDosJSON)
 }
 
+let deleteToDo = (toDo: ToDo, toDos: ToDo []) => {
+    let deleteIndex = toDos.findIndex((t) => {return t.Id = toDo.Id})
+    if (deleteIndex > -1) {
+        toDos.splice(deleteIndex,1)
+    }
+}
+
 // Returns the amount of uncompleted todos in the given ToDo array
 const getAmountOfTodosLeft = (toDos: ToDo[]) => {
     const filteredTodos =
@@ -39,7 +46,7 @@ const getAmountOfTodosLeft = (toDos: ToDo[]) => {
     return filteredTodos.length
 }
 
-const createToDoDOM = (toDo:ToDo) => {
+const createToDoDOM = (toDo:ToDo, allToDos: ToDo [], filters: ToDoFilters) => {
     let row = document.createElement("tr")
 
     let textTd = document.createElement("td")
@@ -56,6 +63,11 @@ const createToDoDOM = (toDo:ToDo) => {
     let deleteBtn = document.createElement("button")
     deleteBtn.textContent = "Delete"
     deleteBtn.className = "button is-danger is-inverted"
+    deleteBtn.addEventListener("click",(e) => {
+        deleteToDo(toDo, allToDos)
+        saveToDosInLocalStorage(allToDos)
+        renderTodos(allToDos, filters)
+    })
 
     
     completedTd.appendChild(toDoCheckBox)
@@ -77,15 +89,12 @@ const generateSummaryDOM = (toDos:ToDo[]) => {
 
 // render application ToDos based on current filters
 const renderTodos = (toDos: ToDo[], toDoFilters: ToDoFilters) => {
-    debugger
     const filteredTodos =
         toDos
             .filter((todo) => {
-                debugger
                 return todo.Text.toLowerCase().includes(toDoFilters.SearchText.toLowerCase())
             })
             .filter((toDo) => {
-                debugger
                 if (toDo.Completed) {
                     return (toDo.Completed && toDoFilters.ShowCompleted) 
                 } else {
@@ -102,7 +111,7 @@ const renderTodos = (toDos: ToDo[], toDoFilters: ToDoFilters) => {
     tableInfo?.appendChild(generateSummaryDOM(toDos))
 
     filteredTodos.map((toDo) => {
-        let newToDo = createToDoDOM(toDo)
+        let newToDo = createToDoDOM(toDo, toDos, toDoFilters)
         console.log(newToDo)
         toDosTable?.appendChild(newToDo)
     })

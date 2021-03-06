@@ -5,6 +5,13 @@ type Note = {
     Title: string,
     Body: string
 }
+
+type NoteFilters = {
+    SearchText: string
+}
+
+type Sorting = | "edited" | "created" | "alphabetically"
+
 //create a note
 const createNote = (id:string,title:string,body:string) : Note => {
     return {
@@ -25,8 +32,17 @@ const getNotesFromLocalStorage = () : Note [] => {
 const saveNotesInLocalStorage = (notes:Note[]) => {
     localStorage.setItem("myNotes", (JSON.stringify(notes)))
 }
+const removeNote = (noteId: string, notes: Note []) => {
+    let noteIndex = notes.findIndex((note) => {
+        return note.Id = noteId
+    })
+    if (noteIndex > -1) {
+        notes.splice(noteIndex, 1)
+    }
+}
+
 // generate the DOM structure for a note
-const generateNoteDOM = (note: Note) => {
+const generateNoteDOM = (note: Note, notes: Note [], filters: NoteFilters) => {
 
     let block = document.createElement("div")
     block.className = "block"
@@ -46,6 +62,11 @@ const generateNoteDOM = (note: Note) => {
     let deleteBtn = document.createElement("button")
     deleteBtn.className = "button is-inverted is-danger card-footer-item"
     deleteBtn.textContent = "Delete note"
+    deleteBtn.addEventListener("click",(e) => {
+        removeNote(note.Id,notes)
+        saveNotesInLocalStorage(notes)
+        renderNotes(notes,filters)
+    })
 
 
     if (note.Title.length === 0) {
@@ -77,6 +98,7 @@ const generateNoteDOM = (note: Note) => {
 
     return block
 } 
+
 // render application notes
 const renderNotes = (notes:Note[], notefilters:NoteFilters) => {
     const filteredNotes = notes.filter((note) => {
@@ -86,14 +108,10 @@ const renderNotes = (notes:Note[], notefilters:NoteFilters) => {
     if (Components.notesList) Components.notesList.innerHTML = ""
 
     filteredNotes.map((note) =>{
-        let noteCard = generateNoteDOM(note)
+        let noteCard = generateNoteDOM(note, notes, notefilters)
         Components.notesList?.appendChild(noteCard)
     })
 }
-type NoteFilters = {
-    SearchText: string
-}
-type Sorting = | "edited" | "created" | "alphabetically"
 
 export {
     Note,
