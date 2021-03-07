@@ -1,4 +1,4 @@
-import * as Components from "./components"
+import * as AppComponents from "./app-components"
 
 type Note = {
     Id: string,
@@ -32,20 +32,36 @@ const getNotesFromLocalStorage = () : Note [] => {
 const saveNotesInLocalStorage = (notes:Note[]) => {
     localStorage.setItem("myNotes", (JSON.stringify(notes)))
 }
-const removeNote = (noteId: string, notes: Note []) => {
-    let noteIndex = notes.findIndex((note) => {
-        return note.Id = noteId
+
+const getNoteIndexById = (noteId: string, notes: Note []) => {
+    let index = notes.findIndex((note) => {
+        return note.Id === noteId
     })
+    return index
+}
+
+const removeNoteById = (noteId: string, notes: Note []) => {
+    let noteIndex = getNoteIndexById(noteId,notes)
     if (noteIndex > -1) {
         notes.splice(noteIndex, 1)
     }
 }
 
+const getNoteById = (noteId: string, notes: Note []) => {
+    let noteIndex = getNoteIndexById(noteId,notes)
+    if (noteIndex > -1) {
+        return notes[noteIndex]
+    } else {
+        return undefined
+    }
+}
+
+
 // generate the DOM structure for a note
 const generateNoteDOM = (note: Note, notes: Note [], filters: NoteFilters) => {
 
     let block = document.createElement("div")
-    block.className = "block"
+    block.className = "block pt-4"
 
     let card = document.createElement("div")
     card.className = "card note"
@@ -53,9 +69,10 @@ const generateNoteDOM = (note: Note, notes: Note [], filters: NoteFilters) => {
     let cardHeader = document.createElement("div")
     cardHeader.className = "card-header"
     
-    let cardTitle = document.createElement("p")
+    let cardTitle = document.createElement("a")
     cardTitle.className = "card-header-title note-title"
-    
+    cardTitle.href = `/edit-note.html#${note.Id}`
+
     let cardFooter = document.createElement("footer")
     cardFooter.className = "card-footer"
 
@@ -63,10 +80,15 @@ const generateNoteDOM = (note: Note, notes: Note [], filters: NoteFilters) => {
     deleteBtn.className = "button is-inverted is-danger card-footer-item"
     deleteBtn.textContent = "Delete note"
     deleteBtn.addEventListener("click",(e) => {
-        removeNote(note.Id,notes)
+        removeNoteById(note.Id,notes)
         saveNotesInLocalStorage(notes)
         renderNotes(notes,filters)
     })
+
+    let editBtn = document.createElement("a")
+    editBtn.className = "button is-inverted is-info card-footer-item"
+    editBtn.textContent = "Edit note"
+    editBtn.href = `/edit-note.html#${note.Id}`
 
 
     if (note.Title.length === 0) {
@@ -91,6 +113,7 @@ const generateNoteDOM = (note: Note, notes: Note [], filters: NoteFilters) => {
     cardContent.appendChild(content)
     cardHeader.appendChild(cardTitle)
     cardFooter.appendChild(deleteBtn)
+    cardFooter.appendChild(editBtn)
     card.appendChild(cardHeader)
     card.appendChild(cardContent)
     card.append(cardFooter)
@@ -105,11 +128,11 @@ const renderNotes = (notes:Note[], notefilters:NoteFilters) => {
         return note.Title.toLowerCase().includes(notefilters.SearchText.toLowerCase())
     })
 
-    if (Components.notesList) Components.notesList.innerHTML = ""
+    if (AppComponents.notesList) AppComponents.notesList.innerHTML = ""
 
     filteredNotes.map((note) =>{
         let noteCard = generateNoteDOM(note, notes, notefilters)
-        Components.notesList?.appendChild(noteCard)
+        AppComponents.notesList?.appendChild(noteCard)
     })
 }
 
@@ -120,5 +143,8 @@ export {
     createNote,
     getNotesFromLocalStorage,
     saveNotesInLocalStorage,
-    renderNotes
+    renderNotes,
+    removeNoteById,
+    getNoteById,
+    getNoteIndexById
 }

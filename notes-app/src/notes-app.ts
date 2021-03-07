@@ -3,7 +3,7 @@ import type {Note, NoteFilters, Sorting} from "./domain"
 
 import {v4} from "uuid"
 
-import * as Components from "./components"
+import * as AppComponents from "./app-components"
 
 const myNotes : Note [] = Domain.getNotesFromLocalStorage()
 
@@ -11,20 +11,20 @@ const notefilters : NoteFilters = {
     SearchText: ""
 }
 
-Components.addNoteBtn?.addEventListener("click",(event) => {
+AppComponents.addNoteBtn?.addEventListener("click",(event) => {
     let newNote = Domain.createNote(v4(),"","")
     myNotes.push(newNote)
     Domain.saveNotesInLocalStorage(myNotes)
-    Domain.renderNotes(myNotes, notefilters)
+    location.assign(`/edit-note.html#${newNote.Id}`)
 })
 
 
-Components.searchNoteText?.addEventListener("input",(event) => {
+AppComponents.searchNoteText?.addEventListener("input",(event) => {
     notefilters.SearchText = (<HTMLInputElement>event.currentTarget).value
     Domain.renderNotes(myNotes, notefilters)
 })
 
-Components.sortNotesSelect?.addEventListener("change", (e) => {
+AppComponents.sortNotesSelect?.addEventListener("change", (e) => {
     let select = (<HTMLSelectElement>e.currentTarget)
     console.log(select.value)
 })

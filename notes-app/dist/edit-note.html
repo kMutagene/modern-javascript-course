@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+</head>
+<body>
+    <section class='hero is-primary'>
+        <div class='hero-body'>
+            <h1 class='title'>Edit note</h1>
+            <h2 class='subtitle'>soos</h2>
+        </div>
+    </section>
+    <section class="section">
+        <div class='container'>
+            <div class='field'>
+               <label class='label'>Edit note title</label>
+               <div class='control'>
+                   <textarea id="edit-note-title-textarea" class="textarea"></textarea>
+               </div>
+            </div>
+            <div class='field'>
+               <label class='label'>Edit note body</label>
+               <div class='control'>
+                <textarea id="edit-note-body-textarea" class="textarea"></textarea>
+               </div>
+            </div>
+            <div class='field is-grouped'>
+                <div class='control'>
+                    <button class="button is-success" id="update-note-btn">Save note</button>
+                </div>
+                <div class='control'>
+                    <button class="button is-danger" id="delete-note-btn">Delete note</button>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+<footer>
+    <script src="editNote.bundle.js"></script>
+</footer>
+</html>

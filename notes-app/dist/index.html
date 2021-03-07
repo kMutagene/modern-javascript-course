@@ -11,30 +11,32 @@
        </div>
     </section>
     <section class="section">
-        <button id="add-note-btn" class="button is-success">Create note</button>
-        <div class='field'>
-           <label class='label'>Filter notes</label>
-           <div class='control'>
-               <input id="search-note-text" type="text" class="input" placeholder="filter notes">
-           </div>
-        </div>
-        <div class='field'>
-           <label class='label'>Sort By</label>
-           <div class='control'>
-               <div class='select'>
-                   <select id="sort-notes-select">
-                       <option value="edited">last edited</option>
-                       <option value="created">recently created</option>
-                       <option value="alphabetically">alphabetical order</option>
-                   </select>
+        <div class='container'>
+            <button id="add-note-btn" class="button is-success">Create note</button>
+            <div class='field'>
+               <label class='label'>Filter notes</label>
+               <div class='control'>
+                   <input id="search-note-text" type="text" class="input" placeholder="filter notes">
                </div>
-           </div>
+            </div>
+            <div class='field'>
+               <label class='label'>Sort By</label>
+               <div class='control'>
+                   <div class='select'>
+                       <select id="sort-notes-select">
+                           <option value="edited">last edited</option>
+                           <option value="created">recently created</option>
+                           <option value="alphabetically">alphabetical order</option>
+                       </select>
+                   </div>
+               </div>
+            </div>
         </div>
         <div id="notes-list" class="container">
         </div>
     </section>
 </body>
 <footer>
-    <script src="bundle.js"></script>
+    <script src="app.bundle.js"></script>
 </footer>
 </html>
