@@ -5,7 +5,7 @@ import {v4} from "uuid"
 
 import * as AppComponents from "./app-components"
 
-const myNotes : Note [] = Domain.getNotesFromLocalStorage()
+let allNotes : Note [] = Domain.getNotesFromLocalStorage()
 
 const notefilters : NoteFilters = {
     SearchText: ""
@@ -13,15 +13,15 @@ const notefilters : NoteFilters = {
 
 AppComponents.addNoteBtn?.addEventListener("click",(event) => {
     let newNote = Domain.createNote(v4(),"","")
-    myNotes.push(newNote)
-    Domain.saveNotesInLocalStorage(myNotes)
+    allNotes.push(newNote)
+    Domain.saveNotesInLocalStorage(allNotes)
     location.assign(`/edit-note.html#${newNote.Id}`)
 })
 
 
 AppComponents.searchNoteText?.addEventListener("input",(event) => {
     notefilters.SearchText = (<HTMLInputElement>event.currentTarget).value
-    Domain.renderNotes(myNotes, notefilters)
+    Domain.renderNotes(allNotes, notefilters)
 })
 
 AppComponents.sortNotesSelect?.addEventListener("change", (e) => {
@@ -29,4 +29,11 @@ AppComponents.sortNotesSelect?.addEventListener("change", (e) => {
     console.log(select.value)
 })
 
-Domain.renderNotes(myNotes, notefilters)
+window.addEventListener("storage", (e) => {
+    if (e.key === "myNotes") {
+        allNotes = JSON.parse(e.newValue)
+        Domain.renderNotes(allNotes, notefilters)
+    }
+})
+
+Domain.renderNotes(allNotes, notefilters)

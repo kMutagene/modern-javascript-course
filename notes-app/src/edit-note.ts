@@ -5,9 +5,9 @@ import * as EditNoteComponents from "./edit-note-components"
 
 const noteID = (location.hash.substring(1))
 
-const allNotes = Domain.getNotesFromLocalStorage()
+let allNotes = Domain.getNotesFromLocalStorage()
 
-const noteOfInterest = Domain.getNoteById(noteID,allNotes)
+let noteOfInterest = Domain.getNoteById(noteID,allNotes)
 
 const populateInputs = (note:Note) => {
     let titleElem =  <HTMLTextAreaElement>(EditNoteComponents.editNoteTitleTextarea) 
@@ -57,6 +57,14 @@ EditNoteComponents.DeleteNoteBtn?.addEventListener("click",(e) => {
     Domain.removeNoteById(noteOfInterest.Id, allNotes)
     Domain.saveNotesInLocalStorage(allNotes)
     location.assign("/index.html")
+})
+
+window.addEventListener("storage", (e) => {
+    if (e.key === "myNotes") {
+        allNotes = JSON.parse(e.newValue)
+        noteOfInterest = Domain.getNoteById(noteID,allNotes)
+        renderEditNotePage(noteOfInterest)
+    }
 })
 
 renderEditNotePage(noteOfInterest)
