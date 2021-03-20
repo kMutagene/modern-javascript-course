@@ -1,6 +1,7 @@
 import * as Domain from "./domain"
 import type {Note, NoteFilters, Sorting} from "./domain"
 import {v4} from "uuid"
+import * as moment from "moment"
 import * as EditNoteComponents from "./edit-note-components"
 
 const noteID = (location.hash.substring(1))
@@ -12,7 +13,9 @@ let noteOfInterest = Domain.getNoteById(noteID,allNotes)
 const populateInputs = (note:Note) => {
     let titleElem =  <HTMLTextAreaElement>(EditNoteComponents.editNoteTitleTextarea) 
     let bodyElem = <HTMLTextAreaElement>(EditNoteComponents.editNoteBodyTextarea)
+    let lastEditedElem = <HTMLSpanElement>(EditNoteComponents.lastEditedSpan)
 
+    lastEditedElem.textContent = Domain.getLastEditedText(note)
     titleElem.value = note.Title
     bodyElem.value = note.Body
 }
@@ -48,6 +51,7 @@ EditNoteComponents.editNoteBodyTextarea?.addEventListener("change",(e) => {
 
 EditNoteComponents.UpdateNoteBtn?.addEventListener("click",(e) => {
     console.log(noteOfInterest)
+    noteOfInterest.UpdatedAt = moment().valueOf()
     updateNoteOfInterest(noteOfInterest, allNotes)
     Domain.saveNotesInLocalStorage(allNotes)
     location.assign("/index.html")

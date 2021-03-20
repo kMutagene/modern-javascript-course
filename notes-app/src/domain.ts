@@ -1,9 +1,12 @@
 import * as AppComponents from "./app-components"
+import * as moment from 'moment'
 
 type Note = {
     Id: string,
     Title: string,
-    Body: string
+    Body: string,
+    CreatedAt: number,
+    UpdatedAt: number
 }
 
 type NoteFilters = {
@@ -13,13 +16,20 @@ type NoteFilters = {
 type Sorting = | "edited" | "created" | "alphabetically"
 
 //create a note
-const createNote = (id:string,title:string,body:string) : Note => {
-    return {
-        Id: id,
-        Title: title,
-        Body: body
+const createNote = (
+    id: string,
+    title: string,
+    body: string,
+    created: number, 
+    updated: number) : Note => {
+        return {
+            Id: id,
+            Title: title,
+            Body: body,
+            CreatedAt: created,
+            UpdatedAt: updated
+        }
     }
-}
 // get saved notes from local storage or empty note array
 const getNotesFromLocalStorage = () : Note [] => {
     const notesJSON = localStorage.getItem("myNotes")
@@ -56,6 +66,9 @@ const getNoteById = (noteId: string, notes: Note []) => {
     }
 }
 
+const getLastEditedText = (note:Note) => {
+    return `Last edited ${moment(note.UpdatedAt).fromNow()}`
+}
 
 // generate the DOM structure for a note
 const generateNoteDOM = (note: Note, notes: Note [], filters: NoteFilters) => {
@@ -76,6 +89,10 @@ const generateNoteDOM = (note: Note, notes: Note [], filters: NoteFilters) => {
     let cardFooter = document.createElement("footer")
     cardFooter.className = "card-footer"
 
+    let updatedSpan = document.createElement("span")
+    updatedSpan.className = "is-size-7 has-text-weight-light is-italic"
+    updatedSpan.textContent = getLastEditedText(note) 
+
     let deleteBtn = document.createElement("button")
     deleteBtn.className = "button is-inverted is-danger card-footer-item"
     deleteBtn.textContent = "Delete note"
@@ -89,7 +106,6 @@ const generateNoteDOM = (note: Note, notes: Note [], filters: NoteFilters) => {
     editBtn.className = "button is-inverted is-info card-footer-item"
     editBtn.textContent = "Edit note"
     editBtn.href = `/edit-note.html#${note.Id}`
-
 
     if (note.Title.length === 0) {
         cardTitle.textContent = "Unnamed Note"
@@ -111,6 +127,7 @@ const generateNoteDOM = (note: Note, notes: Note [], filters: NoteFilters) => {
     }
 
     cardContent.appendChild(content)
+    cardContent.appendChild(updatedSpan)
     cardHeader.appendChild(cardTitle)
     cardFooter.appendChild(deleteBtn)
     cardFooter.appendChild(editBtn)
@@ -146,5 +163,6 @@ export {
     renderNotes,
     removeNoteById,
     getNoteById,
-    getNoteIndexById
+    getNoteIndexById,
+    getLastEditedText
 }

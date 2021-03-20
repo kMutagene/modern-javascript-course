@@ -4,6 +4,7 @@ import type {Note, NoteFilters, Sorting} from "./domain"
 import {v4} from "uuid"
 
 import * as AppComponents from "./app-components"
+import * as moment from "moment"
 
 let allNotes : Note [] = Domain.getNotesFromLocalStorage()
 
@@ -12,7 +13,8 @@ const notefilters : NoteFilters = {
 }
 
 AppComponents.addNoteBtn?.addEventListener("click",(event) => {
-    let newNote = Domain.createNote(v4(),"","")
+    let timestamp = moment().valueOf()
+    let newNote = Domain.createNote(v4(),"","",timestamp,timestamp)
     allNotes.push(newNote)
     Domain.saveNotesInLocalStorage(allNotes)
     location.assign(`/edit-note.html#${newNote.Id}`)
