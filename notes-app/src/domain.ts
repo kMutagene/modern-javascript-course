@@ -9,11 +9,27 @@ type Note = {
     UpdatedAt: number
 }
 
-type NoteFilters = {
-    SearchText: string
+enum Sorting {
+    Edited,
+    Created,
+    Alphabetically
 }
 
-type Sorting = | "edited" | "created" | "alphabetically"
+const sortingOfString = (s: string) => {
+    switch (s.toLowerCase()) {
+        case "edited" :
+            return Sorting.Edited
+        case "created":
+            return Sorting.Created
+        case "alphabetically":
+            return Sorting.Alphabetically
+    }
+}
+
+type NoteFilters = {
+    SearchText: string
+    SortBy: Sorting
+}
 
 //create a note
 const createNote = (
@@ -30,6 +46,7 @@ const createNote = (
             UpdatedAt: updated
         }
     }
+
 // get saved notes from local storage or empty note array
 const getNotesFromLocalStorage = () : Note [] => {
     const notesJSON = localStorage.getItem("myNotes")
@@ -39,6 +56,7 @@ const getNotesFromLocalStorage = () : Note [] => {
         return []
     }
 }
+
 const saveNotesInLocalStorage = (notes:Note[]) => {
     localStorage.setItem("myNotes", (JSON.stringify(notes)))
 }
@@ -139,11 +157,51 @@ const generateNoteDOM = (note: Note, notes: Note [], filters: NoteFilters) => {
     return block
 } 
 
+const sortNotes = (notes:Note[], sorting:Sorting) => {
+    switch (sorting) {
+        case Sorting.Edited :
+            return notes.sort((a,b) => {
+                if (a.UpdatedAt > b.UpdatedAt) {
+                    return -1
+                } else if (a.UpdatedAt < b.UpdatedAt) {
+                    return 1
+                } else {
+                    return 0
+                }
+            })
+        case Sorting.Created:
+            return notes.sort((a,b) => {
+                if (a.CreatedAt > b.CreatedAt) {
+                    return -1
+                } else if (a.CreatedAt < b.CreatedAt) {
+                    return 1
+                } else {
+                    return 0
+                }
+            })
+        case Sorting.Alphabetically:
+            return notes.sort((a,b) => {
+                if (a.Title.toLowerCase() < b.Title.toLowerCase()) {
+                    return -1
+                } else if (a.Title.toLowerCase() > b.Title.toLowerCase()) {
+                    return 1
+                } else {
+                    return 0
+                }
+            })
+        }
+}
+
 // render application notes
 const renderNotes = (notes:Note[], notefilters:NoteFilters) => {
-    const filteredNotes = notes.filter((note) => {
-        return note.Title.toLowerCase().includes(notefilters.SearchText.toLowerCase())
-    })
+
+    const sortedNotes = sortNotes(notes, notefilters.SortBy)
+
+    const filteredNotes = 
+        sortedNotes
+            .filter((note) => {
+                return note.Title.toLowerCase().includes(notefilters.SearchText.toLowerCase())
+            })
 
     if (AppComponents.notesList) AppComponents.notesList.innerHTML = ""
 
@@ -157,6 +215,7 @@ export {
     Note,
     NoteFilters,
     Sorting,
+    sortingOfString,
     createNote,
     getNotesFromLocalStorage,
     saveNotesInLocalStorage,

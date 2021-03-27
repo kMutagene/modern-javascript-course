@@ -1,5 +1,5 @@
 import * as Domain from "./domain"
-import type {Note, NoteFilters, Sorting} from "./domain"
+import type {Note, NoteFilters} from "./domain"
 
 import {v4} from "uuid"
 
@@ -9,7 +9,8 @@ import * as moment from "moment"
 let allNotes : Note [] = Domain.getNotesFromLocalStorage()
 
 const notefilters : NoteFilters = {
-    SearchText: ""
+    SearchText: "",
+    SortBy: Domain.Sorting.Edited
 }
 
 AppComponents.addNoteBtn?.addEventListener("click",(event) => {
@@ -27,8 +28,8 @@ AppComponents.searchNoteText?.addEventListener("input",(event) => {
 })
 
 AppComponents.sortNotesSelect?.addEventListener("change", (e) => {
-    let select = (<HTMLSelectElement>e.currentTarget)
-    console.log(select.value)
+    notefilters.SortBy = Domain.sortingOfString((<HTMLSelectElement>e.currentTarget).value)
+    Domain.renderNotes(allNotes, notefilters)
 })
 
 window.addEventListener("storage", (e) => {
