@@ -17,12 +17,11 @@ const createToDo = (id:string,text:string) : ToDo => {
 // return locally saved ToDo array if present, else return an empty array
 const getToDosFromLocalStorage = () : ToDo [] => {
     let toDosJSON = localStorage.getItem("myToDos")
-    if (toDosJSON) {
-        return JSON.parse(toDosJSON)
-    } else {
-        return []
-    }
+    return toDosJSON 
+        ? JSON.parse(toDosJSON) 
+        : []
 }
+
 
 // Save ToDo array in local storage
 const saveToDosInLocalStorage = (toDos: ToDo[]) => {

@@ -50,11 +50,9 @@ const createNote = (
 // get saved notes from local storage or empty note array
 const getNotesFromLocalStorage = () : Note [] => {
     const notesJSON = localStorage.getItem("myNotes")
-    if (notesJSON) {
-        return JSON.parse(notesJSON)
-    } else {
-        return []
-    }
+    return notesJSON
+        ? JSON.parse(notesJSON)
+        : []
 }
 
 const saveNotesInLocalStorage = (notes:Note[]) => {
