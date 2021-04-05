@@ -62,9 +62,7 @@ const saveNotesInLocalStorage = (notes:Note[]) => {
 }
 
 const getNoteIndexById = (noteId: string, notes: Note []) => {
-    let index = notes.findIndex((note) => {
-        return note.Id === noteId
-    })
+    let index = notes.findIndex((note) => note.Id === noteId)
     return index
 }
 
@@ -197,11 +195,7 @@ const renderNotes = (notes:Note[], notefilters:NoteFilters) => {
 
     const sortedNotes = sortNotes(notes, notefilters.SortBy)
 
-    const filteredNotes = 
-        sortedNotes
-            .filter((note) => {
-                return note.Title.toLowerCase().includes(notefilters.SearchText.toLowerCase())
-            })
+    const filteredNotes = sortedNotes.filter((note) => note.Title.toLowerCase().includes(notefilters.SearchText.toLowerCase()))
 
     if (AppComponents.notesList) AppComponents.notesList.innerHTML = ""
 

@@ -31,7 +31,7 @@ const saveToDosInLocalStorage = (toDos: ToDo[]) => {
 }
 
 const deleteToDo = (toDo: ToDo, toDos: ToDo []) => {
-    let deleteIndex = toDos.findIndex((t) => {return t.Id = toDo.Id})
+    let deleteIndex = toDos.findIndex((t) => t.Id = toDo.Id)
     if (deleteIndex > -1) {
         toDos.splice(deleteIndex,1)
     }
@@ -39,16 +39,13 @@ const deleteToDo = (toDo: ToDo, toDos: ToDo []) => {
 
 const changeTodoCompletedState = (toDo: ToDo, completedState:boolean, allToDos:ToDo[]) => {
     toDo.Completed = completedState
-    let toDoIndex = allToDos.findIndex((t)=>{t.Id = toDo.Id})
+    let toDoIndex = allToDos.findIndex((t) => t.Id = toDo.Id)
     if (toDoIndex > -1) {allToDos[toDoIndex] = toDo}
 }
 
 // Returns the amount of uncompleted todos in the given ToDo array
 const getAmountOfTodosLeft = (toDos: ToDo[]) => {
-    const filteredTodos =
-        toDos.filter((todo) => {
-            return !todo.Completed
-        })
+    const filteredTodos = toDos.filter((todo) => !todo.Completed)
     return filteredTodos.length
 }
 
