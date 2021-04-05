@@ -95,7 +95,6 @@ const generateSummaryDOM = (toDos:ToDo[]) => {
     return header
 }
 
-
 // render application ToDos based on current filters
 const renderTodos = (toDos: ToDo[], toDoFilters: ToDoFilters) => {
     const filteredTodos =
@@ -104,11 +103,9 @@ const renderTodos = (toDos: ToDo[], toDoFilters: ToDoFilters) => {
                 return todo.Text.toLowerCase().includes(toDoFilters.SearchText.toLowerCase())
             })
             .filter((toDo) => {
-                if (toDo.Completed) {
-                    return (toDo.Completed && toDoFilters.ShowCompleted) 
-                } else {
-                    return true
-                }
+                return toDo.Completed
+                    ? (toDo.Completed && toDoFilters.ShowCompleted) 
+                    : true
             })
     
     console.log(filteredTodos)

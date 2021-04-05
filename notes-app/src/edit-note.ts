@@ -22,21 +22,16 @@ const populateInputs = (note:Note) => {
 
 let updateNoteOfInterest = (note:Note, allNotes:Note []) => {
     let noteIndex = Domain.getNoteIndexById(note.Id, allNotes)
-    if (noteIndex > -1) {
-        console.log ("performing update")
-        allNotes[noteIndex] = note
-    } else {
-        console.log("note not found")
-    }
+    noteIndex > -1
+        ? allNotes[noteIndex] = note
+        : console.log("note not found")
 }
 
 const renderEditNotePage = (noteOfInterest:Note) => {
-    if (noteOfInterest) {
-        console.log(noteOfInterest)
-        populateInputs(noteOfInterest)
-    } else {
-        location.assign("/index.html")
-    }
+    noteOfInterest 
+        ? populateInputs(noteOfInterest)
+        : location.assign("/index.html")
+    
 } 
 
 EditNoteComponents.editNoteTitleTextarea?.addEventListener("change",(e) => {
