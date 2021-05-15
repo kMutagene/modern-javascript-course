@@ -1,7 +1,21 @@
-const Hangman = function (word, allowedGuesses) {
-    this.word = word,
-    this.allowedGuesses = allowedGuesses
+const Hangman = function (word, allowedGuesses, guesses) {
+    this.word = word.split(""),
+    this.allowedGuesses = allowedGuesses,
+    this.guesses = guesses
 }
 
-console.log(new Hangman("soos", 2))
-console.log(new Hangman("saas", 2))
+Hangman.prototype.getPuzzle = function() {
+    return this.word
+        .map((character) => {
+            if (this.guesses.includes(character)) {
+                return character
+            } else {
+                return '*'
+            }
+        })
+        .join("")
+}
+
+let game1 = new Hangman("soos", 2, ['s'])
+
+console.log(game1.getPuzzle())
