@@ -6,3 +6,5 @@ todo-app/todo-app.js
 notes-app/domain.js
 todo-app/domain.js
 node_modules
+hangman-app/dist/app.bundle.js
+todo-app/dist/bundle.js
