@@ -1,10 +1,44 @@
 <!DOCTYPE html>
 <html>
     <head>
-
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+        <style>
+            .is-bad-guess{
+                color:red
+            }
+            .is-correct-guess {
+                color:green
+            }
+            .gameCharacter {
+                font-size: 50px;
+                text-decoration: underline;
+                padding-right: 50px;
+            }
+            .game-loss {
+                font-size: 50px;
+                color: red;
+            }
+            .game-win {
+                font-size: 50px;
+                color: green;
+            }
+        </style>
     </head>
     <body>
-        
+        <section class='hero is-primary'>
+           <div class='hero-body'>
+               <h1 class='title'>Lets play a round of hangman!</h1>
+               <h2 class='subtitle'>Enter any key to play ...</h2>
+           </div>
+        </section>
+        <section class="section">
+            <div id="game-field" class='container'>
+               
+            </div>
+            <div id="context" class='container'>
+
+            </div>
+        </section>
     </body>
     <footer>
         <script src="app.bundle.js"></script>
