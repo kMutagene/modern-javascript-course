@@ -57,7 +57,7 @@ class HangmanGame {
     get puzzle() {
         return this.Word
             .map((character) => {
-                if (this.Guesses.includes(character)) {
+                if (this.Guesses.includes(character) || character === " ") {
                     return character
                 } else {
                     return '*'
@@ -70,7 +70,11 @@ class HangmanGame {
         let isSolved = 
             this.Word
                 .filter((character) => {
-                    return !this.Guesses.includes(character)
+                    if (character === " ") {
+                        return false
+                    } else {
+                        return !this.Guesses.includes(character)
+                    }
                 })
                 .length === 0
 

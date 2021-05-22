@@ -11,7 +11,7 @@
 import { gameField,context } from "./app-components";
 import { GameState, HangmanGame } from "./domain";
 
-const game = new HangmanGame("hallo", 10)
+const game = new HangmanGame("hallo bruh", 10)
 
 const renderGame = (game:HangmanGame) => {
 
@@ -21,7 +21,7 @@ const renderGame = (game:HangmanGame) => {
                 let span = document.createElement("span")
                 span.className = "gameCharacter"
             
-                if (game.Guesses.includes(character)) {
+                if (game.Guesses.includes(character) || character === " ") {
                     span.innerHTML = character
                 } else {
                     span.innerHTML = "*"
@@ -46,7 +46,6 @@ const renderGame = (game:HangmanGame) => {
         game.Guesses
             .map((guess) => {
                 let li = document.createElement("li")
-                let p = document.createElement("div")
                 if (game.isBadGuess(guess)) {
                     li.className = "guess is-bad-guess"
                 } else {
