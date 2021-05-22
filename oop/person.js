@@ -25,15 +25,41 @@ class Person {
 
 }
 
-const me = new Person("kev", "schne", 26)
 
-console.log(me) 
+class Employee extends Person {
+    constructor(fn, ln, age, position, likes) {
+        super(fn, ln, age, likes)
+        this.position = position
+    }
 
-// prototypal inheritance
+    getBio(){
+        return `${this.firstName} ${this.lastName} is a ${this.position}`
+    }
 
-const mew = new Person("kev", "schne", 26, ["sose", "meem"])
+    getYearsLeft() {
+        return 65 - this.age
+    }
+}
 
 
-console.log(mew.getBio()) 
-mew.setName("soos saAS")
-console.log(mew.getBio()) 
+class Student extends Person {
+    constructor(fn, ln, age, points, likes) {
+        super(fn, ln, age, likes)
+        this.points = points
+    }
+    getBio() {
+        if (this.points < 60) {
+            return `${this.firstName} ${this.lastName} has ${this.points} points and is failing the class`
+        } else {
+            return `${this.firstName} ${this.lastName} has ${this.points} points and is passing the class`
+        }
+    }
+    updateGrade(additionalPoints){
+        this.points = this.points + additionalPoints
+    }
+}
+
+const stud = new Student("so","os", 42, 69, ["sose"])
+console.log(stud.getBio())
+stud.updateGrade(-27)
+console.log(stud.getBio())
