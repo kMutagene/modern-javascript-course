@@ -67,7 +67,7 @@ const renderGame = (game:HangmanGame) => {
 }
 
 renderGame(game)
-console.log(game.getPuzzle())
+console.log(game.puzzle)
 console.log(`Remaining guesses: ${game.RemainingGuesses}`)
 console.log("Enter guess:")
 

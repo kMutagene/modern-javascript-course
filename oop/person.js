@@ -7,7 +7,7 @@ class Person {
     }
 
     getBio () {
-        let bio = `${this.firstName} ${this.lastName} is ${this.age}`
+        let bio = `${this.fullName} is ${this.age}`
     
         this.likes.forEach(element => {
             bio += `\r\n\t${this.firstName} likes ${element}` // arrow functions do not bind `this` -> this is the person from the above scope.
@@ -17,12 +17,15 @@ class Person {
         
     }
     
-    setName(fullName) {
+    set fullName(fullName) {
         let names = fullName.split(" ")
         this.firstName = names[0]
         this.lastName = names[1]
     }
 
+    get fullName() {
+        return `${this.firstName} ${this.lastName}`
+    }
 }
 
 
@@ -33,7 +36,7 @@ class Employee extends Person {
     }
 
     getBio(){
-        return `${this.firstName} ${this.lastName} is a ${this.position}`
+        return `${this.fullName} is a ${this.position}`
     }
 
     getYearsLeft() {
@@ -47,13 +50,15 @@ class Student extends Person {
         super(fn, ln, age, likes)
         this.points = points
     }
+
     getBio() {
         if (this.points < 60) {
-            return `${this.firstName} ${this.lastName} has ${this.points} points and is failing the class`
+            return `${this.fullName} has ${this.points} points and is failing the class`
         } else {
-            return `${this.firstName} ${this.lastName} has ${this.points} points and is passing the class`
+            return `${this.fullName} has ${this.points} points and is passing the class`
         }
     }
+
     updateGrade(additionalPoints){
         this.points = this.points + additionalPoints
     }

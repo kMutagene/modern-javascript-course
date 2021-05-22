@@ -54,7 +54,7 @@ class HangmanGame {
         }
     }
 
-    getPuzzle() {
+    get puzzle() {
         return this.Word
             .map((character) => {
                 if (this.Guesses.includes(character)) {
