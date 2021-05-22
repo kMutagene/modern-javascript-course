@@ -61,7 +61,7 @@ const renderGame = (game:HangmanGame) => {
         context.innerHTML = "You Win!"
         context.className = "game-win"
     } else {
-        context.innerHTML = "You Loose =("
+        context.innerHTML = `You Loose =(. The word was: ${game.Word.join("")}`
         context.className = "game-loss"
     }
 }
