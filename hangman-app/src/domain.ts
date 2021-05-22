@@ -4,6 +4,10 @@ enum GameState {
     InProgress
 }
 
+type Puzzle = {
+    puzzle: string
+}
+
 class HangmanGame {
     Word: string [];
     AllowedGuesses: number;
@@ -94,5 +98,6 @@ class HangmanGame {
 
 export {
     GameState,
-    HangmanGame
+    HangmanGame,
+    Puzzle
 }

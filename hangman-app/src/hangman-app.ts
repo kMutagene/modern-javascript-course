@@ -9,7 +9,18 @@
 // Boolean: myBoolean -> Boolean{myBoolean} -> Boolean.prototype -> Object.prototype -> null
 
 import { gameField,context } from "./app-components";
-import { GameState, HangmanGame } from "./domain";
+import { GameState, Puzzle, HangmanGame } from "./domain";
+
+const request = new XMLHttpRequest()
+request.open("GET", "http://puzzle.mead.io/puzzle")
+request.send()
+request.addEventListener("readystatechange", (e) => {
+    let t = <XMLHttpRequest>(e.target)
+    if (t.readyState === 4) {
+        const data : Puzzle = JSON.parse(t.responseText)
+        console.log(data)
+    }
+})
 
 const game = new HangmanGame("hallo bruh", 10)
 
