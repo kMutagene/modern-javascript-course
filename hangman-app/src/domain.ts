@@ -1,3 +1,5 @@
+import { gameField,context } from "./app-components";
+
 enum GameState {
     Lost,
     Won,
@@ -96,8 +98,62 @@ class HangmanGame {
 
 }
 
+
+const renderGame = (game:HangmanGame) => {
+
+    gameField.innerHTML = ""
+        game.Word
+            .map((character) => {
+                let span = document.createElement("span")
+                span.className = "gameCharacter"
+            
+                if (game.Guesses.includes(character) || character === " ") {
+                    span.innerHTML = character
+                } else {
+                    span.innerHTML = "*"
+                }
+                gameField.appendChild(span)
+            })
+    
+        context.innerHTML = ""
+
+    if (game.GameState === GameState.InProgress) {
+        
+        let guessesLeft = document.createElement("h1")
+        guessesLeft.innerHTML = `${game.RemainingGuesses} guesses left.`
+        context.appendChild(guessesLeft)
+
+        let guesses = document.createElement("h2")
+        guesses.className = "subtitle"
+        guesses.innerHTML = "Your guesses so far:"
+        context.appendChild(guesses)
+    
+        let guessList = document.createElement("ol")
+        game.Guesses
+            .map((guess) => {
+                let li = document.createElement("li")
+                if (game.isBadGuess(guess)) {
+                    li.className = "guess is-bad-guess"
+                } else {
+                    li.className = "guess is-correct-guess"
+                }
+                li.innerHTML = guess
+                guessList.appendChild(li)
+            })
+    
+        context.appendChild(guessList)
+    } else if (game.GameState === GameState.Won) {
+        context.innerHTML = "You Win!"
+        context.className = "game-win"
+    } else {
+        context.innerHTML = `You Loose =(. The word was: ${game.Word.join("")}`
+        context.className = "game-loss"
+    }
+}
+
 export {
     GameState,
     HangmanGame,
-    Puzzle
+    Puzzle,
+    renderGame
 }
