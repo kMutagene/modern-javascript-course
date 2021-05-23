@@ -12,12 +12,15 @@ getData((err,data) => {
 })
 
 // promise
-const myPromise = new Promise((resolve,reject) => {
-    setTimeout(() => {
-        //reject("promise: error")
-        resolve("promise: soos")
-    }, 2000)
-})
+const getDataPromise = (data) => 
+    new Promise((resolve,reject) => {
+        setTimeout(() => {
+            resolve(data)
+        }, 2000)
+    })
+
+
+const myPromise = getDataPromise("promise: soos")
 
 myPromise
     .then((result) => {

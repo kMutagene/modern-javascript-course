@@ -2,17 +2,22 @@ import { gameField,context } from "./app-components";
 import { GameState, Puzzle, HangmanGame, renderGame } from "./domain";
 import { getPuzzle, getCountryDetails} from "./requests"
 
-getPuzzle((error, puzzle) => 
-    error
-    ? console.log(error)
-    : console.log(puzzle)
-)
+getPuzzle(6)
+    .then((puzzle) => {
+        console.log(puzzle)
+    })
+    .catch((error) => {
+        console.log(`error: ${error}`)
+    })
 
-getCountryDetails("DE", (error, country) => 
-    error
-    ? console.log(error)
-    : console.log(country.name)
-)
+getCountryDetails("DE")
+    .then((country) => {
+        console.log(country)
+    })
+    .catch((error) => {
+        console.log(`error: ${error}`)
+    })
+
 const game = new HangmanGame("puzzle", 10)
 
 renderGame(game)
