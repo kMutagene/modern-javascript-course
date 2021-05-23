@@ -1,6 +1,6 @@
 import { gameField,context } from "./app-components";
 import { GameState, Puzzle, HangmanGame, renderGame } from "./domain";
-import {getPuzzle} from "./requests"
+import { getPuzzle, getCountryDetails} from "./requests"
 
 getPuzzle((error, puzzle) => 
     error
@@ -8,6 +8,11 @@ getPuzzle((error, puzzle) =>
     : console.log(puzzle)
 )
 
+getCountryDetails("DE", (error, country) => 
+    error
+    ? console.log(error)
+    : console.log(country.name)
+)
 const game = new HangmanGame("puzzle", 10)
 
 renderGame(game)
