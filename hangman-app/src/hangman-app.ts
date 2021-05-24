@@ -1,6 +1,6 @@
 import { gameField,context } from "./app-components";
 import { GameState, Puzzle, HangmanGame, renderGame } from "./domain";
-import { getPuzzle, getCountryDetails} from "./requests"
+import { getPuzzle, getCountryDetails, whereAmI} from "./requests"
 
 getPuzzle(6)
     .then((puzzle) => {
@@ -13,6 +13,14 @@ getPuzzle(6)
 getCountryDetails("DE")
     .then((country) => {
         console.log(country)
+    })
+    .catch((error) => {
+        console.log(`error: ${error}`)
+    })
+
+whereAmI("insert token here")
+    .then((response) => {
+        console.log(response)
     })
     .catch((error) => {
         console.log(`error: ${error}`)
