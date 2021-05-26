@@ -1,4 +1,5 @@
 import { gameField,context } from "./app-components";
+import { getPuzzle } from "./requests";
 
 enum GameState {
     Lost,
@@ -151,9 +152,15 @@ const renderGame = (game:HangmanGame) => {
     }
 }
 
+const newGame = async () => {
+    const puzzle = await getPuzzle(2)
+    return new HangmanGame(puzzle, 10)
+} 
+
 export {
     GameState,
     HangmanGame,
     Puzzle,
-    renderGame
+    renderGame,
+    newGame
 }

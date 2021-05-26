@@ -1,44 +1,17 @@
-import { gameField,context } from "./app-components";
-import { GameState, Puzzle, HangmanGame, renderGame } from "./domain";
+import * as AppComponents from "./app-components" ;
+import { GameState, Puzzle, HangmanGame, renderGame, newGame } from "./domain";
 import { getPuzzle, getCountryDetails, whereAmI, getCurrentCountry} from "./requests"
 
-getPuzzle(6)
-    .then((puzzle) => {
-        console.log(puzzle)
-    })
-    .catch((error) => {
-        console.log(`error: ${error}`)
-    })
+let game: HangmanGame
 
-getCountryDetails("DE")
-    .then((country) => {
-        console.log(country)
-    })
-    .catch((error) => {
-        console.log(`error: ${error}`)
-    })
+const startNewGame = async () => {
+    game = await newGame()
+    renderGame(game)
+}
 
-whereAmI("tokenPlox")
-    .then((response) => {
-        console.log(response)
-    })
-    .catch((error) => {
-        console.log(`error: ${error}`)
-    })
+AppComponents.resetBtn.addEventListener("click",startNewGame)
 
-getCurrentCountry()
-    .then((response) => {
-        console.log(response)
-    })
-    .catch((error) => {
-        console.log(`error: ${error}`)
-    })
-const game = new HangmanGame("puzzle", 10)
-
-renderGame(game)
-console.log(game.puzzle)
-console.log(`Remaining guesses: ${game.RemainingGuesses}`)
-console.log("Enter guess:")
+startNewGame()
 
 window.addEventListener("keypress",(e) => {
     if (game.GameState === GameState.InProgress) {
