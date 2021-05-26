@@ -1,6 +1,6 @@
 import { gameField,context } from "./app-components";
 import { GameState, Puzzle, HangmanGame, renderGame } from "./domain";
-import { getPuzzle, getCountryDetails, whereAmI} from "./requests"
+import { getPuzzle, getCountryDetails, whereAmI, getCurrentCountry} from "./requests"
 
 getPuzzle(6)
     .then((puzzle) => {
@@ -18,7 +18,7 @@ getCountryDetails("DE")
         console.log(`error: ${error}`)
     })
 
-whereAmI("insert token here")
+whereAmI("tokenPlox")
     .then((response) => {
         console.log(response)
     })
@@ -26,6 +26,13 @@ whereAmI("insert token here")
         console.log(`error: ${error}`)
     })
 
+getCurrentCountry()
+    .then((response) => {
+        console.log(response)
+    })
+    .catch((error) => {
+        console.log(`error: ${error}`)
+    })
 const game = new HangmanGame("puzzle", 10)
 
 renderGame(game)

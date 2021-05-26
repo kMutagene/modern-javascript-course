@@ -11,34 +11,37 @@ const getPuzzle = async (wordCount:number) => {
     }
 }
 
-const getCountryDetails = (countryCode:string) => 
-    fetch("http://restcountries.eu/rest/v2/all")
-        .then((response) => {
-            if (response.status === 200) {
-                return response.json()
-            } else {
-                throw new Error("error fetching puzzle")
-            }
-        })
-        .then((data) => 
-            data.find((country:any) => {return country.alpha2Code === countryCode})
-        )
+const getCountryDetails = async (countryCode:string) => {
+    const response = await fetch("http://restcountries.eu/rest/v2/all")
+    if (response.status === 200) {
+        let data = await response.json()
+        return data.find((country:any) => {return country.alpha2Code === countryCode})
+    } else {
+        throw new Error("error country info")
+    }
+}
 
-const whereAmI = (token:string) => 
-    fetch(`http://ipinfo.io/json/?token=token`)
-        .then((response) => {
-            if (response.status === 200) {
-                return response.json()
-            } else {
-                throw new Error("error fetching puzzle")
-            }
-        })
-        .then((location) => 
-            `you are (kinda) in ${location.city}, ${location.region}, ${location.country}`
-        )
+const whereAmI = async (token:string) => {
+    const response = await fetch(`http://ipinfo.io/json/?token=${token}`)
+    if (response.status === 200) {
+        let location = await response.json()
+        console.log(`you are (kinda) in ${location.city}, ${location.region}, ${location.country}`)
+        return location
+    } else {
+        throw new Error("error fetching ip info")
+    }
+}
+
+const getCurrentCountry = async () => {
+    let loc = await whereAmI("tokenPlox")
+    let country = await getCountryDetails(loc.country)
+    return country.name
+}
+
 
 export {
     getPuzzle,
     getCountryDetails,
-    whereAmI
+    whereAmI,
+    getCurrentCountry
 }
