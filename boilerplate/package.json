@@ -4,6 +4,8 @@
   "description": "",
   "main": "input.js",
   "scripts": {
+    "serve": "live-server public",
+    "webpack": "webpack",
     "build": "babel src/index.js -o public/scripts/bundle.js --presets @babel/env --watch"
   },
   "author": "",
@@ -11,6 +13,10 @@
   "devDependencies": {
     "@babel/cli": "^7.14.3",
     "@babel/core": "^7.14.3",
-    "@babel/preset-env": "^7.14.4"
-  }
+    "@babel/preset-env": "^7.14.4",
+    "live-server": "^1.2.1",
+    "webpack": "^5.38.1",
+    "webpack-cli": "^4.7.0"
+  },
+  "dependencies": {}
 }
