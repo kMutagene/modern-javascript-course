@@ -13,3 +13,7 @@ var Test = function Test() {
     console.log("meem");
   });
 };
+
+var t = new Test();
+t.myMethod();
+console.log(soos);
