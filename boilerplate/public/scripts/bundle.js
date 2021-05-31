@@ -1,1 +1,1 @@
-(new class{myMethod=()=>{console.log("meem")}}).myMethod(),console.log("soos");
+(()=>{"use strict";console.log("utilities.js");console.log("index.js"),console.log(3),console.log("".concat("soos".toUpperCase(),"!!!!1!"))})();

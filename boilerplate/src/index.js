@@ -1,10 +1,6 @@
-const soos = "soos"
+import square, * as Utilities from "./utilities"
+import scream from "./scream"
 
-class Test {
-    myMethod = () => {console.log("meem")} 
-}
-
-const t = new Test()
-
-t.myMethod()
-console.log(soos)
+console.log("index.js")
+console.log(Utilities.add(1,2))
+console.log(scream("soos"))
