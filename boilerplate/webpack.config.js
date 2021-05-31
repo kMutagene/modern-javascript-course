@@ -6,6 +6,11 @@ module.exports = {
         filename: 'bundle.js',
         path: path.resolve(__dirname, 'public/scripts')
     },
+    devServer: {
+        contentBase: path.resolve(__dirname, 'public'),
+        publicPath: "/scripts/"
+    },
+    devtool : "source-map",
     module: {
         rules: [
             {

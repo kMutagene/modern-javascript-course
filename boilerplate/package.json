@@ -4,8 +4,8 @@
   "description": "",
   "main": "input.js",
   "scripts": {
-    "serve": "live-server public",
-    "build": "webpack"
+    "dev-server": "webpack serve --open --mode development",
+    "build": "webpack --mode production"
   },
   "author": "",
   "license": "ISC",
@@ -13,10 +13,11 @@
     "@babel/cli": "^7.14.3",
     "@babel/core": "^7.14.3",
     "@babel/preset-env": "^7.14.4",
+    "babel-loader": "^8.2.2",
     "live-server": "^1.2.1",
     "webpack": "^5.38.1",
     "webpack-cli": "^4.7.0",
-    "babel-loader": "^8.2.2"
+    "webpack-dev-server": "^3.11.2"
   },
   "dependencies": {}
 }

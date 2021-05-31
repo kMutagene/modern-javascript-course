@@ -3,4 +3,4 @@ import scream from "./scream"
 
 console.log("index.js")
 console.log(Utilities.add(1,2))
-console.log(scream("soos"))
+console.log(scream("soose"))
